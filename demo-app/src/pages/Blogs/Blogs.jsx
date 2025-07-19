@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { BlogCard } from "../../components/BlogCard/BlogCard";
+
+// let viewType = "LIST"; Normal Vanilla JS Variable. UI Doesn't react to this variable in REACT JS we have to use HOOKS
 
 const blogs = [
   {
@@ -49,12 +51,34 @@ const blogs = [
     isDeleted: "false",
   },
 ];
+
 export const Blogs = () => {
+  const [viewType, setViewType] = useState("LIST");
+  const onViewChange = () => {
+    // console.log("View button clicked", viewType);
+    // viewType = viewType === "LIST" ? "TILE" : "LIST"; Vanilla JS Variable Assignment
+    const newViewType = viewType === "LIST" ? "TILE" : "LIST";
+
+    setViewType(newViewType);
+  };
   return (
     <div>
-      {blogs.map((blog, index) => {
-        return <BlogCard key={index} {...blog} />;
-      })}
+      <button onClick={onViewChange}>
+        {viewType === "LIST" ? "Tile" : "List"} View
+      </button>
+      <h3>Blogs Page</h3>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          width: "100%",
+          flexDirection: viewType === "LIST" ? "column" : "",
+        }}
+      >
+        {blogs.map((blog, index) => {
+          return <BlogCard key={index} {...blog} viewType={viewType} />;
+        })}
+      </div>
     </div>
   );
 };
