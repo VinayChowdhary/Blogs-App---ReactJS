@@ -30,7 +30,7 @@ export const BlogCard = (props) => {
           style={{
             margin: "12px 0",
             padding: "8px 18px",
-            background: "#f59e42", // a pleasant orange, change as you like
+            background: "#f59e42", 
             color: "#fff",
             border: "none",
             borderRadius: "5px",
