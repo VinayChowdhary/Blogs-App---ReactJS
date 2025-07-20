@@ -7,7 +7,7 @@ const blogs = [
   {
     image: "https://picsum.photos/id/1018/400/200",
     title: "",
-    body: "Goa is famous for its golden beaches, nightlife, and seafood.<br />Don't forget to visit Baga and Palolem.<br />Perfect for both party-goers and peace-seekers.",
+    body: "    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis quod, saepe, impedit praesentium dolore quia laudantium nisi molestiae exercitationem earum maxime deserunt iusto, recusandae magni illo pariatur voluptate animi unde!    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis quod, saepe, impedit praesentium dolore quia laudantium nisi molestiae exercitationem earum maxime deserunt iusto, recusandae magni illo pariatur voluptate animi unde! Goa is famous for its golden beaches, nightlife, and seafood.<br />Don't forget to visit Baga and Palolem.<br />Perfect for both party-goers and peace-seekers.",
     author: {
       name: "Issac",
     },
@@ -63,16 +63,37 @@ export const Blogs = () => {
   };
   return (
     <div>
-      <button onClick={onViewChange}>
+      <button
+        onClick={onViewChange}
+        style={{
+          margin: "16px 0",
+          padding: "10px 24px",
+          background: viewType === "LIST" ? "#2563eb" : "#22c55e",
+          color: "#fff",
+          border: "none",
+          borderRadius: "6px",
+          fontWeight: "bold",
+          fontSize: "16px",
+          letterSpacing: "0.5px",
+          cursor: "pointer",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          transition: "background 0.2s, color 0.2s, transform 0.1s",
+          outline: "none",
+        }}
+        onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
+        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+      >
         {viewType === "LIST" ? "Tile" : "List"} View
       </button>
       <h3>Blogs Page</h3>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
           width: "100%",
           flexDirection: viewType === "LIST" ? "column" : "",
+          alignItems: viewType === "LIST" ? "stretch" : "flex-start",
+          gap: "16px", // optional, for better spacing
         }}
       >
         {blogs.map((blog, index) => {
