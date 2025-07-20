@@ -93,7 +93,7 @@ export const Blogs = () => {
           width: "100%",
           flexDirection: viewType === "LIST" ? "column" : "",
           alignItems: viewType === "LIST" ? "stretch" : "flex-start",
-          gap: "16px", // optional, for better spacing
+          gap: "16px", 
         }}
       >
         {blogs.map((blog, index) => {
