@@ -30,7 +30,7 @@ export const BlogCard = (props) => {
           style={{
             margin: "12px 0",
             padding: "8px 18px",
-            background: "#f59e42", 
+            background: "#f59e42",
             color: "#fff",
             border: "none",
             borderRadius: "5px",
@@ -88,7 +88,7 @@ export const BlogCard = (props) => {
             justifyContent: "space-between",
             padding: "12px 12px 10px 12px",
             minHeight: 0,
-            marginTop : "5px"
+            marginTop: "5px",
           }}
         >
           {/* Title always at the top */}
