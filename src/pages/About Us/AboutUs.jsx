@@ -48,27 +48,3 @@ export default class AboutUs extends Component {
   //   return true;
   // }
 }
-
-import React, { Component } from 'react'
-
-export default class AboutUs extends Component {
-  render() {
-    return (
-      <div>
-        
-      </div>
-    )
-  }
-}
-import React from 'react'
-
-const AboutUs = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default AboutUs
-

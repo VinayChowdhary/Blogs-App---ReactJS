@@ -4,6 +4,8 @@ import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import { Blogs } from "./pages/Blogs/Blogs";
 import AboutUs from "./pages/About Us/AboutUs";
+import Enquiry from "./pages/Enquiry/Enquiry";
+import EnquiryUncontrolled from "./pages/Enquiry/EnquiryUncontrolled";
 
 const App = () => {
   return (
@@ -11,7 +13,9 @@ const App = () => {
       <Header />
       {/* <Blogs /> */}
       {/* <ArraysMaps1607 /> */}
-      <AboutUs />
+      {/* <AboutUs /> */}
+      <Enquiry />
+      <EnquiryUncontrolled />
       <Footer />
     </div>
   );
