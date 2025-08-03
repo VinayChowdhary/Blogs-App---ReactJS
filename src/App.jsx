@@ -6,6 +6,8 @@ import { Blogs } from "./pages/Blogs/Blogs";
 import AboutUs from "./pages/About Us/AboutUs";
 import Enquiry from "./pages/Enquiry/Enquiry";
 import EnquiryUncontrolled from "./pages/Enquiry/EnquiryUncontrolled";
+import EnquiryControlled from "./pages/Enquiry/EnquiryControlled";
+import EnquiryControlledOptimized from "./pages/Enquiry/EnquiryControlledOptimized";
 
 const App = () => {
   return (
@@ -14,8 +16,10 @@ const App = () => {
       {/* <Blogs /> */}
       {/* <ArraysMaps1607 /> */}
       {/* <AboutUs /> */}
-      <Enquiry />
-      <EnquiryUncontrolled />
+      {/* <Enquiry />
+      <EnquiryUncontrolled /> */}
+      <EnquiryControlled />
+      <EnquiryControlledOptimized />
       <Footer />
     </div>
   );
