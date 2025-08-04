@@ -24,35 +24,52 @@ const EnquiryControlledOptimized = () => {
     console.log("Name change:", e.target.value);
     //max length 12 char
     if (e.target.value.length <= 12) {
-      setEnquiryFormFields((prevState) => ({
-        ...prevState,
-        name: e.target.value,
-      }));
-      setEnquiryFormFieldsError({ nameError: false });
+      // setEnquiryFormFields((prevState) => ({
+      //   ...prevState,
+      //   name: e.target.value,
+      // }));
+      setEnquiryFormFields({ ...enquiryFormFields, name: e.target.value });
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        nameError: false,
+      });
     } else {
       //store the error here
-      setEnquiryFormFieldsError({ nameError: true });
+      setEnquiryFormFieldsError({ ...enquiryFormFieldsError, nameError: true });
     }
   };
   const onMobNoChange = (e) => {
     console.log("Mobile change:", e.target.value);
     if (e.target.value.length <= 10) {
-      setEnquiryFormFields({ mobNo: e.target.value });
-      setEnquiryFormFieldsError({ mobNoError: false });
+      setEnquiryFormFields({ ...enquiryFormFields, mobNo: e.target.value });
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        mobNoError: false,
+      });
     } else {
-      setEnquiryFormFieldsError({ mobNoError: true });
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        mobNoError: true,
+      });
     }
   };
   const onMessageChange = (e) => {
     console.log("Message change:", e.target.value);
     if (e.target.value.length <= 30) {
-      setEnquiryFormFields({ message: e.target.value });
-      setEnquiryFormFieldsError({ messageError: false });
+      setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        messageError: false,
+      });
     } else {
-      setEnquiryFormFieldsError({ messageError: true });
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        messageError: true,
+      });
     }
   };
 
+  console.log(enquiryFormFields);
   return (
     <div>
       <hr />
