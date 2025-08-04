@@ -13,6 +13,7 @@ const EnquiryControlledOptimized = () => {
     name: "",
     mobNo: "",
     message: "",
+    enquiryDept: "",
   });
   const [enquiryFormFieldsError, setEnquiryFormFieldsError] = useState({
     nameError: false,
@@ -20,6 +21,10 @@ const EnquiryControlledOptimized = () => {
     messageError: false,
   });
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    console.log(enquiryFormFields);
+  };
   const onNameChange = (e) => {
     console.log("Name change:", e.target.value);
     //max length 12 char
@@ -69,12 +74,16 @@ const EnquiryControlledOptimized = () => {
     }
   };
 
-  console.log(enquiryFormFields);
+  const onEnquiryDeptChange = (e) => {
+    console.log("On enquiry dept change", e.target.value);
+    setEnquiryFormFields({ ...enquiryFormFields, enquiryDept: e.target.value });
+  };
+
   return (
     <div>
       <hr />
       <h3>Controlled Enquiry Form - Optimized</h3>
-      <form onSubmit={() => {}}>
+      <form onSubmit={onFormSubmit}>
         <div>
           <label htmlFor="name">Enter your Name : </label>
           <input
@@ -133,6 +142,27 @@ const EnquiryControlledOptimized = () => {
           >
             The maximum allowed characters are 30
           </span>
+          <div>
+            <label htmlFor="enquiryDept">Select your department: </label>
+            <select
+              name="enquiryDept"
+              id="enquiryDept"
+              onChange={onEnquiryDeptChange}
+            >
+              <option value="TECH">Technical</option>
+              <option value="SALES">Sales</option>
+              <option value="OTHERS">Others(Please specify)</option>
+            </select>
+            <textarea
+              name="otherDept"
+              id="otherDept"
+              placeholder="Enter the department name"
+              style={{
+                display:
+                  enquiryFormFields.enquiryDept === "OTHERS" ? "block" : "none",
+              }}
+            ></textarea>
+          </div>
         </div>
         <input type="submit" name="" id="" /> <br />
         {/* <button type="submit">Submit Button</button> */}
