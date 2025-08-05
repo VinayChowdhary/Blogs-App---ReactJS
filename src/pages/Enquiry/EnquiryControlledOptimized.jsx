@@ -14,6 +14,7 @@ const EnquiryControlledOptimized = () => {
     mobNo: "",
     message: "",
     enquiryDept: "",
+    otherEnquiryDept: "",
   });
   const [enquiryFormFieldsError, setEnquiryFormFieldsError] = useState({
     nameError: false,
@@ -25,26 +26,63 @@ const EnquiryControlledOptimized = () => {
     e.preventDefault();
     console.log(enquiryFormFields);
   };
-  const onNameChange = (e) => {
-    console.log("Name change:", e.target.value);
-    //max length 12 char
-    if (e.target.value.length <= 12) {
-      // setEnquiryFormFields((prevState) => ({
-      //   ...prevState,
-      //   name: e.target.value,
-      // }));
-      setEnquiryFormFields({ ...enquiryFormFields, name: e.target.value });
-      setEnquiryFormFieldsError({
-        ...enquiryFormFieldsError,
-        nameError: false,
-      });
-    } else {
-      //store the error here
-      setEnquiryFormFieldsError({ ...enquiryFormFieldsError, nameError: true });
+  // const onNameChange = (e) => {
+  //   // console.log("Name change:", e.target.value);
+  //   //max length 12 char
+  //   if (e.target.value.length <= 12) {
+  //     // setEnquiryFormFields((prevState) => ({
+  //     //   ...prevState,
+  //     //   name: e.target.value,
+  //     // }));
+  //     setEnquiryFormFields({ ...enquiryFormFields, name: e.target.value });
+  //     setEnquiryFormFieldsError({
+  //       ...enquiryFormFieldsError,
+  //       nameError: false,
+  //     });
+  //   } else {
+  //     //store the error here
+  //     setEnquiryFormFieldsError({ ...enquiryFormFieldsError, nameError: true });
+  //   }
+  // };
+
+  // const onInputChange = (e) => {
+  //   console.log(e.target.name);
+  //   e.target.name === "mobNo"
+  //     ? setEnquiryFormFields({ ...enquiryFormFields, mobNo: e.target.value })
+  //     : setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
+  // };
+  const onInputChange = (e) => {
+    console.log(e.target.name);
+    setEnquiryFormFields({
+      ...enquiryFormFields,
+      [e.target.id]: e.target.value,
+    });
+    validateFields(e.target.name, e.target.value);
+  };
+
+  const validateFields = (fieldName, fieldValue) => {
+    if (fieldName === "name") {
+      //validation for name
+      if (fieldValue.length <= 12) {
+        setEnquiryFormFields({ ...enquiryFormFields, name: fieldValue });
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          nameError: false,
+        });
+      } else {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          nameError: true,
+        });
+      }
+    } else if (fieldName === "mobNo") {
+      //validation for mobile no
     }
   };
+
   const onMobNoChange = (e) => {
-    console.log("Mobile change:", e.target.value);
+    // console.log("Mobile change:", e.target.value);
+    //Assume no conditional logic is there and we have to club the mob no and message ones into one function
     if (e.target.value.length <= 10) {
       setEnquiryFormFields({ ...enquiryFormFields, mobNo: e.target.value });
       setEnquiryFormFieldsError({
@@ -59,7 +97,7 @@ const EnquiryControlledOptimized = () => {
     }
   };
   const onMessageChange = (e) => {
-    console.log("Message change:", e.target.value);
+    // console.log("Message change:", e.target.value);
     if (e.target.value.length <= 30) {
       setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
       setEnquiryFormFieldsError({
@@ -75,8 +113,15 @@ const EnquiryControlledOptimized = () => {
   };
 
   const onEnquiryDeptChange = (e) => {
-    console.log("On enquiry dept change", e.target.value);
+    // console.log("On enquiry dept change", e.target.value);
     setEnquiryFormFields({ ...enquiryFormFields, enquiryDept: e.target.value });
+  };
+  const onOtherEnquiryDeptChange = (e) => {
+    // console.log("On  other enquiry dept change", e.target.value);
+    setEnquiryFormFields({
+      ...enquiryFormFields,
+      otherEnquiryDept: e.target.value,
+    });
   };
 
   return (
@@ -87,7 +132,7 @@ const EnquiryControlledOptimized = () => {
         <div>
           <label htmlFor="name">Enter your Name : </label>
           <input
-            onChange={onNameChange}
+            onChange={onInputChange}
             name="name"
             id="name"
             type="text"
@@ -107,7 +152,7 @@ const EnquiryControlledOptimized = () => {
         <div>
           <label htmlFor="mobNo">Enter your Mobile number : </label>
           <input
-            onChange={onMobNoChange}
+            onChange={onInputChange}
             name="mobNo"
             id="mobNo"
             type="number"
@@ -127,7 +172,7 @@ const EnquiryControlledOptimized = () => {
         <div>
           <label htmlFor="message">Enter your Message : </label>
           <textarea
-            onChange={onMessageChange}
+            onChange={onInputChange}
             name="Message"
             id="message"
             value={enquiryFormFields.message}
@@ -154,6 +199,7 @@ const EnquiryControlledOptimized = () => {
               <option value="OTHERS">Others(Please specify)</option>
             </select>
             <textarea
+              onChange={onOtherEnquiryDeptChange}
               name="otherDept"
               id="otherDept"
               placeholder="Enter the department name"
