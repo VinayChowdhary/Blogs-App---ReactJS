@@ -25,6 +25,21 @@ const EnquiryControlledOptimized = () => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     console.log(enquiryFormFields);
+    // TO DO Call the API and send the data
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(enquiryFormFields),
+    })
+      .then((res) => res.json)
+      .then((data) => {
+        console.log("Response :", data);
+      })
+      .catch((err) => {
+        console.log("ERROR OCCURRED WHILE FETCHING THE DATA", err);
+      });
   };
   // const onNameChange = (e) => {
   //   // console.log("Name change:", e.target.value);
@@ -52,65 +67,95 @@ const EnquiryControlledOptimized = () => {
   //     : setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
   // };
   const onInputChange = (e) => {
-    console.log(e.target.name);
-    setEnquiryFormFields({
-      ...enquiryFormFields,
-      [e.target.id]: e.target.value,
-    });
-    validateFields(e.target.name, e.target.value);
+    //console.log(e.target.name);
+    const isValid = validateFields(e.target.name, e.target.value);
+    if (isValid) {
+      setEnquiryFormFields({
+        ...enquiryFormFields,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const validateFields = (fieldName, fieldValue) => {
     if (fieldName === "name") {
       //validation for name
       if (fieldValue.length <= 12) {
-        setEnquiryFormFields({ ...enquiryFormFields, name: fieldValue });
         setEnquiryFormFieldsError({
           ...enquiryFormFieldsError,
           nameError: false,
         });
+        return true;
       } else {
         setEnquiryFormFieldsError({
           ...enquiryFormFieldsError,
           nameError: true,
         });
+        return false;
       }
     } else if (fieldName === "mobNo") {
       //validation for mobile no
+      if (fieldValue.length <= 10) {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          mobNoError: false,
+        });
+        return true;
+      } else {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          mobNoError: true,
+        });
+        return false;
+      }
+    } else if (fieldName === "message") {
+      if (fieldValue.length <= 30) {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          messageError: false,
+        });
+        return true;
+      } else {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          messageError: true,
+        });
+        return false;
+      }
     }
   };
 
-  const onMobNoChange = (e) => {
-    // console.log("Mobile change:", e.target.value);
-    //Assume no conditional logic is there and we have to club the mob no and message ones into one function
-    if (e.target.value.length <= 10) {
-      setEnquiryFormFields({ ...enquiryFormFields, mobNo: e.target.value });
-      setEnquiryFormFieldsError({
-        ...enquiryFormFieldsError,
-        mobNoError: false,
-      });
-    } else {
-      setEnquiryFormFieldsError({
-        ...enquiryFormFieldsError,
-        mobNoError: true,
-      });
-    }
-  };
-  const onMessageChange = (e) => {
-    // console.log("Message change:", e.target.value);
-    if (e.target.value.length <= 30) {
-      setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
-      setEnquiryFormFieldsError({
-        ...enquiryFormFieldsError,
-        messageError: false,
-      });
-    } else {
-      setEnquiryFormFieldsError({
-        ...enquiryFormFieldsError,
-        messageError: true,
-      });
-    }
-  };
+  // const onMobNoChange = (e) => {
+  //   // console.log("Mobile change:", e.target.value);
+  //   //Assume no conditional logic is there and we have to club the mob no and message ones into one function
+  //   if (e.target.value.length <= 10) {
+  //     setEnquiryFormFields({ ...enquiryFormFields, mobNo: e.target.value });
+  //     setEnquiryFormFieldsError({
+  //       ...enquiryFormFieldsError,
+  //       mobNoError: false,
+  //     });
+  //   } else {
+  //     setEnquiryFormFieldsError({
+  //       ...enquiryFormFieldsError,
+  //       mobNoError: true,
+  //     });
+  //   }
+  // };
+  // const onMessageChange = (e) => {
+  //   // console.log("Message change:", e.target.value);
+  //   if (e.target.value.length <= 30) {
+  //     setEnquiryFormFields({ ...enquiryFormFields, message: e.target.value });
+  //     setEnquiryFormFieldsError({
+  //       ...enquiryFormFieldsError,
+  //       messageError: false,
+  //     });
+  //   } else {
+  //     setEnquiryFormFieldsError({
+  //       ...enquiryFormFieldsError,
+  //       messageError: true,
+  //     });
+  //   }
+  // };
 
   const onEnquiryDeptChange = (e) => {
     // console.log("On enquiry dept change", e.target.value);
@@ -173,10 +218,10 @@ const EnquiryControlledOptimized = () => {
           <label htmlFor="message">Enter your Message : </label>
           <textarea
             onChange={onInputChange}
-            name="Message"
+            name="message"
             id="message"
             value={enquiryFormFields.message}
-          ></textarea>{" "}
+          ></textarea>
           <span
             style={{
               display: enquiryFormFieldsError.messageError
