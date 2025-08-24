@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const EnquiryControlledOptimized = () => {
   // const [name, setName] = useState("");
@@ -25,7 +26,7 @@ const EnquiryControlledOptimized = () => {
     otherEnquiryDeptError: false,
   });
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     console.log(enquiryFormFields);
     if (!validateAllFields()) {
@@ -33,27 +34,58 @@ const EnquiryControlledOptimized = () => {
       return;
     }
     // TO DO Call the API and send the data
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      headers: {
-        //request headers
-        "Content-Type": "application/json",
-        "CLIENT-ID": "ABCD1234", //dummy client id
-      },
-      body: JSON.stringify(enquiryFormFields), //request body
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        console.log("Response :", data);
-        alert("Enquiry submitted successfully");
-        //clear the form  after submission
-        setEnquiryFormFields(initialFormFields);
-      })
-      .catch((err) => {
-        console.log("ERROR OCCURRED WHILE FETCHING THE DATA", err);
-      });
+    //AXIOS [Async Await]
+    try {
+      const res = await axios.post(
+        "https://jsonplaceholder.typicode.com/posts",
+        enquiryFormFields,
+        {
+          headers: {
+            Client_id: "ABCD123123",
+          },
+        }
+      );
+      console.log(res.data);
+      alert("Enquiry submitted successfully");
+      //clear the form  after submission
+      setEnquiryFormFields(initialFormFields);
+    } catch (error) {
+      console.log("Error occurred while posting data", error);
+    }
+
+    // axios [OLD]
+    //   .post("https://jsonplaceholder.typicode.com/posts", enquiryFormFields)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     alert("Enquiry submitted successfully");
+    //     //clear the form  after submission
+    //     setEnquiryFormFields(initialFormFields);
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error occurred while posting data", err);
+    //   });
+
+    // fetch("https://jsonplaceholder.typicode.com/posts", {
+    //   method: "POST",
+    //   headers: {
+    //     //request headers
+    //     "Content-Type": "application/json",
+    //     "CLIENT-ID": "ABCD1234", //dummy client id
+    //   },
+    //   body: JSON.stringify(enquiryFormFields), //request body
+    // })
+    //   .then((res) => {
+    //     res.json();
+    //   })
+    //   .then((data) => {
+    //     console.log("Response :", data);
+    //     alert("Enquiry submitted successfully");
+    //     //clear the form  after submission
+    //     setEnquiryFormFields(initialFormFields);
+    //   })
+    //   .catch((err) => {
+    //     console.log("ERROR OCCURRED WHILE FETCHING THE DATA", err);
+    //   });
   };
   // const onNameChange = (e) => {
   //   // console.log("Name change:", e.target.value);
