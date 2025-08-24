@@ -22,11 +22,16 @@ const EnquiryControlledOptimized = () => {
     nameError: false,
     mobNoError: false,
     messageError: false,
+    otherEnquiryDeptError: false,
   });
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     console.log(enquiryFormFields);
+    if (!validateAllFields()) {
+      alert("Please fill all the fields");
+      return;
+    }
     // TO DO Call the API and send the data
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
@@ -133,7 +138,45 @@ const EnquiryControlledOptimized = () => {
       }
     } else if (fieldName === "enquiryDept") {
       return true;
+    } else if (fieldName === "otherEnquiryDept") {
+      if (fieldValue != null) {
+        return true;
+      }
+      return false;
     }
+  };
+
+  const validateAllFields = () => {
+    let valid = true;
+    if (!enquiryFormFields.name || enquiryFormFields.name.length > 12) {
+      valid = false;
+    }
+    if (!enquiryFormFields.mobNo || enquiryFormFields.mobNo.length > 10) {
+      valid = false;
+    }
+    if (!enquiryFormFields.message || enquiryFormFields.message.length > 30) {
+      valid = false;
+    }
+    if (enquiryFormFields.enquiryDept === "OTHERS") {
+      if (enquiryFormFields.otherEnquiryDept.trim() !== "") {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          otherEnquiryDeptError: false,
+        });
+      } else {
+        setEnquiryFormFieldsError({
+          ...enquiryFormFieldsError,
+          otherEnquiryDeptError: true,
+        });
+        valid = false;
+      }
+    } else {
+      setEnquiryFormFieldsError({
+        ...enquiryFormFieldsError,
+        otherEnquiryDeptError: false,
+      });
+    }
+    return valid;
   };
 
   // const onMobNoChange = (e) => {
@@ -257,10 +300,11 @@ const EnquiryControlledOptimized = () => {
               <option value="OTHERS">Others(Please specify)</option>
             </select>
             <textarea
-              onChange={onOtherEnquiryDeptChange}
-              name="otherDept"
-              id="otherDept"
+              onChange={onInputChange}
+              name="otherEnquiryDept"
+              id="otherEnquiryDept"
               placeholder="Enter the department name"
+              value={enquiryFormFields.otherEnquiryDept}
               style={{
                 display:
                   enquiryFormFields.enquiryDept === "OTHERS" ? "block" : "none",
@@ -269,7 +313,6 @@ const EnquiryControlledOptimized = () => {
           </div>
         </div>
         <input type="submit" name="" id="" /> <br />
-        {/* <button type="submit">Submit Button</button> */}
       </form>
     </div>
   );
