@@ -18,7 +18,7 @@ const App = () => {
       {/* <AboutUs /> */}
       {/* <Enquiry />
       <EnquiryUncontrolled /> */}
-      <EnquiryControlled />
+      {/* <EnquiryControlled /> */}
       <EnquiryControlledOptimized />
       <Footer />
     </div>

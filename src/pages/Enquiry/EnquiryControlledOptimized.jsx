@@ -9,13 +9,15 @@ const EnquiryControlledOptimized = () => {
   // const [mobNoError, setMobNoError] = useState(false);
   // const [messageError, setMessageError] = useState(false);
 
-  const [enquiryFormFields, setEnquiryFormFields] = useState({
+  const initialFormFields = {
     name: "",
     mobNo: "",
     message: "",
-    enquiryDept: "",
+    enquiryDept: "DEFAULT",
     otherEnquiryDept: "",
-  });
+  };
+
+  const [enquiryFormFields, setEnquiryFormFields] = useState(initialFormFields);
   const [enquiryFormFieldsError, setEnquiryFormFieldsError] = useState({
     nameError: false,
     mobNoError: false,
@@ -29,13 +31,20 @@ const EnquiryControlledOptimized = () => {
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       headers: {
+        //request headers
         "Content-Type": "application/json",
+        "CLIENT-ID": "ABCD1234", //dummy client id
       },
-      body: JSON.stringify(enquiryFormFields),
+      body: JSON.stringify(enquiryFormFields), //request body
     })
-      .then((res) => res.json)
+      .then((res) => {
+        res.json();
+      })
       .then((data) => {
         console.log("Response :", data);
+        alert("Enquiry submitted successfully");
+        //clear the form  after submission
+        setEnquiryFormFields(initialFormFields);
       })
       .catch((err) => {
         console.log("ERROR OCCURRED WHILE FETCHING THE DATA", err);
@@ -122,6 +131,8 @@ const EnquiryControlledOptimized = () => {
         });
         return false;
       }
+    } else if (fieldName === "enquiryDept") {
+      return true;
     }
   };
 
@@ -157,10 +168,10 @@ const EnquiryControlledOptimized = () => {
   //   }
   // };
 
-  const onEnquiryDeptChange = (e) => {
-    // console.log("On enquiry dept change", e.target.value);
-    setEnquiryFormFields({ ...enquiryFormFields, enquiryDept: e.target.value });
-  };
+  // const onEnquiryDeptChange = (e) => {
+  //   // console.log("On enquiry dept change", e.target.value);
+  //   setEnquiryFormFields({ ...enquiryFormFields, enquiryDept: e.target.value });
+  // };
   const onOtherEnquiryDeptChange = (e) => {
     // console.log("On  other enquiry dept change", e.target.value);
     setEnquiryFormFields({
@@ -237,8 +248,10 @@ const EnquiryControlledOptimized = () => {
             <select
               name="enquiryDept"
               id="enquiryDept"
-              onChange={onEnquiryDeptChange}
+              onChange={onInputChange}
+              value={enquiryFormFields.enquiryDept}
             >
+              <option value="DEFAULT">Select</option>
               <option value="TECH">Technical</option>
               <option value="SALES">Sales</option>
               <option value="OTHERS">Others(Please specify)</option>
